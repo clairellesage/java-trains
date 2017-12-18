@@ -34,10 +34,10 @@ public class Main {
 			// questions 1-5
 
 			Path p1 = new Path(a);
-			Town[] abc = new Town[3];
-			abc[0] = a;
-			abc[1] = b;
-			abc[2] = c;
+			List<Town> abc = new ArrayList<Town>();
+			abc.add(a);
+			abc.add(b);
+			abc.add(c);
 			p1.getDistance(abc);
 
 		} catch (Exception e) {
