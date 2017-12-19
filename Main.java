@@ -9,27 +9,27 @@ public class Main {
 			Town a = new Town("A");
 			Town b = new Town("B");
 			Route ab = new Route("AB", a, b, 5);
-			b.addDestRoute(ab);
-			a.addOriginRoute(ab);
+			a.addDestRoute(ab);
+			b.addOriginRoute(ab);
 
 			Town c = new Town("C");
 			Route bc = new Route("BC", b, c, 4);
-			c.addDestRoute(bc);
-			b.addOriginRoute(bc);
+			b.addDestRoute(bc);
+			c.addOriginRoute(bc);
 
 			Town d = new Town("D");
 			Route cd = new Route("CD", c, d, 8);
-			d.addDestRoute(cd);
-			c.addOriginRoute(cd);
+			c.addDestRoute(cd);
+			d.addOriginRoute(cd);
 
 			Route dc = new Route("DC", d, c, 8);
-			c.addDestRoute(dc);
-			d.addOriginRoute(dc);
+			d.addDestRoute(dc);
+			c.addOriginRoute(dc);
 
 			Town e = new Town("E");
 			Route de = new Route("DE", d, e, 6);
-			e.addDestRoute(de);
-			d.addOriginRoute(de);
+			d.addDestRoute(de);
+			e.addOriginRoute(de);
 
 			// questions 1-5
 
