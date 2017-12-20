@@ -56,11 +56,18 @@ public class Main {
 			abc.add(c);
 			// System.out.println(p1.getDistance(abc));
 
+			// List<Town> ad = new ArrayList<Town>();
+			// ad.add(a);
+			// 2. The distance of the route A-D.
+			// 3. The distance of the route A-D-C.
+			// 4. The distance of the route A-E-B-C-D.
+			// 5. The distance of the route A-E-D.
+
 			// The number of trips starting at C and ending at C with a maximum of 3 stops.  
 			// In the sample data below, there are two such trips: C-D-C (2 stops). and C-E-B-C (3 stops).
 
 			Path p2 = new Path();
-			System.out.printf("\nNumber of trips: %s", p2.numberOfTrips(c, 4));
+			System.out.printf("\nNumber of trips: %s", p2.numberOfTrips(c, c.dests, 3, 0));
 
 
 
