@@ -31,18 +31,36 @@ public class Main {
 			d.addDestRoute(de);
 			e.addOriginRoute(de);
 
-			// questions 1-5
+			Route ad = new Route("AD", a, d, 5);
+			a.addDestRoute(ad);
+			d.addOriginRoute(ad);
 
-			// add all method
+			Route ce = new Route("CE", c, e, 2);
+			c.addDestRoute(ce);
+			e.addOriginRoute(ce);
+
+			Route eb = new Route("EB", e, b, 3);
+			e.addDestRoute(eb);
+			b.addOriginRoute(eb);
+
+			Route ae = new Route("AE", a, e, 7);
+			a.addDestRoute(ae);
+			e.addOriginRoute(ae);
+
+			// questions 1-5
+			// addAll method?
 			Path p1 = new Path();
 			List<Town> abc = new ArrayList<Town>();
 			abc.add(a);
 			abc.add(b);
 			abc.add(c);
-			System.out.println(p1.getDistance(abc));
+			// System.out.println(p1.getDistance(abc));
 
+			// The number of trips starting at C and ending at C with a maximum of 3 stops.  
+			// In the sample data below, there are two such trips: C-D-C (2 stops). and C-E-B-C (3 stops).
 
 			Path p2 = new Path();
+			System.out.printf("\nNumber of trips: %s", p2.numberOfTrips(c, 4));
 
 
 
