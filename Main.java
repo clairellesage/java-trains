@@ -33,12 +33,18 @@ public class Main {
 
 			// questions 1-5
 
-			Path p1 = new Path(a);
+			// add all method
+			Path p1 = new Path();
 			List<Town> abc = new ArrayList<Town>();
 			abc.add(a);
 			abc.add(b);
 			abc.add(c);
-			p1.getDistance(abc);
+			System.out.println(p1.getDistance(abc));
+
+
+			Path p2 = new Path();
+
+
 
 		} catch (Exception e) {
 			System.out.println(e);

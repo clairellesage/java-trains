@@ -11,4 +11,20 @@ public class Route {
 		this.dest = dest;
 		this.distance = distance;
 	}
+
+	public String getName() {
+	    return name;
+	}
+	
+	public Town getDest() {
+	    return dest;
+	}
+
+	public Town getOrigin() {
+	    return origin;
+	}
+
+	public int getDistance() {
+		return distance;
+	}
 }
