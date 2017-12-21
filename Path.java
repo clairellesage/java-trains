@@ -9,20 +9,29 @@ public class Path {
 	private int stops;
 
 	public int getDistance(List<Town> towns) {
+		towns.forEach(t -> System.out.println(t.name));
 	    if (towns.size() < 2) {
 	    	return 0;
 	    } else {
 	    	Town first = towns.get(0);
-	    	Town second = towns.get(1);
-	    	List<Route> filteredRoutes = filterDests(first, second);
-	    	Route filteredRoute = filteredRoutes.get(0);
 	    	towns.remove(first);
-	    	return filteredRoute.distance + getDistance(towns);
+	    	Town second = towns.get(0);
+	    	System.out.printf("\nfirst and second: %s %s", first.name, second.name);
+	    	List<Route> filteredRoutes = filterDests(first, second);
+	    	System.out.printf("\nfiltered rt size %s", filteredRoutes.size());
+	    	if (filteredRoutes.size() > 0) {
+	    		Route filteredRoute = filteredRoutes.get(0);
+	    		System.out.printf("\nilteredRoute %s", filteredRoute.name);
+	    		System.out.printf("\ndist %s", filteredRoute.distance);
+	    		return filteredRoute.distance + getDistance(towns);
+	    	} else {
+	    		return 0;
+	    	}
 	    }
 	}
 
 	private List<Route> filterDests(Town first, Town second) {
-		System.out()
+		first.dests.forEach(drt -> System.out.printf("\ndest route %s", drt.name));
 		return first.dests.stream().filter(outgoingRt -> outgoingRt.getDest().equals(second)).collect(Collectors.toList());
 	}
 

@@ -53,36 +53,36 @@ public class Main {
 			listABC.add(a);
 			listABC.add(b);
 			listABC.add(c);
-			System.out.printf("\nOutput #1: %s", p1.getDistance(listABC));
+			// System.out.printf("\nOutput #1: %s", p1.getDistance(listABC));
 
 			Path p2 = new Path();
 			List<Town> listAD = new ArrayList<Town>();
 			listAD.add(a);
 			listAD.add(d);
-			System.out.printf("\nOutput #2: %s", p2.getDistance(listAD));
+			// System.out.printf("\nOutput #2: %s", p2.getDistance(listAD));
 
 			Path p3 = new Path();
 			List<Town> listADC = new ArrayList<Town>();
 			listADC.add(a);
 			listADC.add(d);
 			listADC.add(c);
-			System.out.printf("\nOutput #3: %s", p3.getDistance(listADC));
+			// System.out.printf("\nOutput #3: %s", p3.getDistance(listADC));
 
 			Path p4 = new Path();
 			List<Town> listAEBCD = new ArrayList<Town>();
 			listAEBCD.add(a);
 			listAEBCD.add(e);
 			listAEBCD.add(b);
-			listAEBCD.add(e);
+			listAEBCD.add(c);
 			listAEBCD.add(d);
-			System.out.printf("\nOutput #4: %s", p4.getDistance(listAEBCD));
+			// System.out.printf("\nOutput #4: %s", p4.getDistance(listAEBCD));
 
 			Path p5 = new Path();
 			List<Town> listAED = new ArrayList<Town>();
 			listAED.add(a);
 			listAED.add(e);
 			listAED.add(d);
-			// System.out.printf("\nOutput #5: %s", p5.getDistance(listAED));
+			System.out.printf("\nOutput #5: %s", p5.getDistance(listAED));
 
 			Path p6 = new Path();
 			// System.out.printf("\nOutput #6: %s", p6.numberOfTrips(c, c, c.dests, 3, 0));
