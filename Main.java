@@ -68,6 +68,7 @@ public class Main {
 
 			Path p2 = new Path();
 			System.out.printf("\nNumber of trips: %s", p2.numberOfTrips(c, c.dests, 3, 0));
+			System.out.printf("\nNumber of trips: %s", p2.numberOfTrips(a, c, a.dests, 3, 0));
 
 
 

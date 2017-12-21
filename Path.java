@@ -43,7 +43,7 @@ public class Path {
 	// 	return routesToOrigin(origin, origin.dests, stops);	
 	// }
 
-	public int numberOfTrips(Town origin, List<Route> outgoing, int remainingStops, int trips) {
+	public int numberOfTrips(Town origin, Town destination, List<Route> outgoing, int remainingStops, int trips) {
 		if (remainingStops == 1){
 			return trips;
 		} else {
@@ -51,19 +51,26 @@ public class Path {
 			List<Route> successors = new ArrayList<Route>();
 
 			for (Route rt : outgoing) {
+				System.out.printf("\noutgoing route: %s", rt.name);
 				for (Route dt : rt.dest.dests) {
-					// System.out.printf("\nSuccessors: %s", dt.name);
+					System.out.printf("\nSuccessors: %s", dt.name);
 					successors.add(dt);
 				}
 			}
 			// 
-			outgoing.forEach(rt -> rt.dest.dests.forEach(d -> successors.add(d)));
+			// outgoing.forEach(rt -> rt.dest.dests.forEach(d -> successors.add(d)));
 			// successors.forEach(s -> System.out.printf("\nSuccessors: %s", s.name));
-			trips = outgoing.stream()
-				.filter(ogr -> ogr.dest.equals(origin))
-				.collect(Collectors.toList()).size();
-			System.out.printf("\ntrips : %s", trips);
-			return numberOfTrips(origin, successors, remainingStops - 1, trips);
+			trips = successors.stream()
+				.filter(ogRoute -> ogRoute.dest.equals(destination))
+				.collect(Collectors.toList()).size() + trips;
+
+			System.out.printf("\ntrips : %s\n", trips);
+			successors.stream()
+				.filter(ogRoute -> ogRoute.dest.equals(destination))
+				.collect(Collectors.toList())
+				.forEach(t -> System.out.printf("trip %s\n", t.name));
+
+			return numberOfTrips(origin, destination, successors, remainingStops - 1, trips);
 			// return 0;
 		}
 	}
