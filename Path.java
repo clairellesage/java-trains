@@ -25,7 +25,7 @@ public class Path {
 	    		System.out.printf("\ndist %s", filteredRoute.distance);
 	    		return filteredRoute.distance + getDistance(towns);
 	    	} else {
-	    		return --;
+	    		return 0;
 	    	}
 	    }
 	}
