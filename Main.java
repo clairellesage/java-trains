@@ -67,8 +67,9 @@ public class Main {
 			// In the sample data below, there are two such trips: C-D-C (2 stops). and C-E-B-C (3 stops).
 
 			Path p2 = new Path();
-			System.out.printf("\nNumber of trips: %s", p2.numberOfTrips(c, c.dests, 3, 0));
-			System.out.printf("\nNumber of trips: %s", p2.numberOfTrips(a, c, a.dests, 3, 0));
+			// System.out.printf("\nNumber of trips: %s", p2.numberOfTrips(c, c, c.dests, 3, 0));
+			Path p3 = new Path();
+			System.out.printf("\nNumber of trips: %s", p3.exactNumberOfTrips(a, c, a.dests, 4));
 
 
 

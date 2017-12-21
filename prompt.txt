@@ -31,7 +31,7 @@ distance of 4).
 6. The number of trips starting at C and ending at C with a maximum of 3 stops.  In the sample data below, there are two such trips: C-D-C (2 stops). and C-E-B-C (3 stops).
 
 
-7. The number of trips starting at A and ending at C with  exactly 4 stops.
+7. The number of trips starting at A and ending at C with exactly 4 stops.
 
 In the sample data below, there are three such trips: A to C (via B,C,D); A to C (via D,C,D); and A to C (via D,E,B).
 
@@ -49,6 +49,10 @@ alphabet from A to D.  A route between two towns (A to B) with a distance
 of 5 is represented as AB5.
 
 Graph: AB5, BC4, CD8, DC8, DE6, AD5, CE2, EB3, AE7
+ABCDC
+ADCBC
+ADEBC
+
 
 Expected Output:
 

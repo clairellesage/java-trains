@@ -47,7 +47,6 @@ public class Path {
 		if (remainingStops == 1){
 			return trips;
 		} else {
-			// System.out.printf("\n%s and %s's outgoing routes", outgoing.get(0).name, outgoing.get(1).name);
 			List<Route> successors = new ArrayList<Route>();
 
 			for (Route rt : outgoing) {
@@ -57,20 +56,48 @@ public class Path {
 					successors.add(dt);
 				}
 			}
-			// 
-			// outgoing.forEach(rt -> rt.dest.dests.forEach(d -> successors.add(d)));
-			// successors.forEach(s -> System.out.printf("\nSuccessors: %s", s.name));
+
 			trips = successors.stream()
 				.filter(ogRoute -> ogRoute.dest.equals(destination))
 				.collect(Collectors.toList()).size() + trips;
 
 			System.out.printf("\ntrips : %s\n", trips);
-			successors.stream()
-				.filter(ogRoute -> ogRoute.dest.equals(destination))
-				.collect(Collectors.toList())
-				.forEach(t -> System.out.printf("trip %s\n", t.name));
+
+			// successors.stream()
+			// 	.filter(ogRoute -> ogRoute.dest.equals(destination))
+			// 	.collect(Collectors.toList())
+			// 	.forEach(t -> System.out.printf("trip %s\n", t.name));
 
 			return numberOfTrips(origin, destination, successors, remainingStops - 1, trips);
+			// return 0;
+		}
+	}
+
+	public int exactNumberOfTrips(Town origin, Town destination, List<Route> outgoing, int remainingStops) {
+			List<Route> successors = new ArrayList<Route>();
+
+			for (Route rt : outgoing) {
+				System.out.printf("\noutgoing route: %s", rt.name);
+				for (Route dt : rt.dest.dests) {
+					System.out.printf("\nSuccessors: %s", dt.name);
+					successors.add(dt);
+				}
+			}
+
+			if (remainingStops == 1){
+				int trips = successors.stream()
+					.filter(ogRoute -> ogRoute.dest.equals(destination))
+					.collect(Collectors.toList()).size();
+				System.out.printf("\ntrips : %s\n", trips);
+				successors.stream()
+					.filter(ogRoute -> ogRoute.dest.equals(destination))
+					.collect(Collectors.toList())
+					.forEach(t -> System.out.printf("trip %s\n", t.name));
+				return trips;
+			} else {
+
+
+				return exactNumberOfTrips(origin, destination, successors, remainingStops - 1);
 			// return 0;
 		}
 	}
