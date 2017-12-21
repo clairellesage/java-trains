@@ -53,20 +53,18 @@ public class Main {
 			listABC.add(a);
 			listABC.add(b);
 			listABC.add(c);
-			// System.out.printf("\nOutput #1: %s", p1.getDistance(listABC));
+			
 
 			Path p2 = new Path();
 			List<Town> listAD = new ArrayList<Town>();
 			listAD.add(a);
 			listAD.add(d);
-			// System.out.printf("\nOutput #2: %s", p2.getDistance(listAD));
 
 			Path p3 = new Path();
 			List<Town> listADC = new ArrayList<Town>();
 			listADC.add(a);
 			listADC.add(d);
 			listADC.add(c);
-			// System.out.printf("\nOutput #3: %s", p3.getDistance(listADC));
 
 			Path p4 = new Path();
 			List<Town> listAEBCD = new ArrayList<Town>();
@@ -75,19 +73,32 @@ public class Main {
 			listAEBCD.add(b);
 			listAEBCD.add(c);
 			listAEBCD.add(d);
-			// System.out.printf("\nOutput #4: %s", p4.getDistance(listAEBCD));
 
 			Path p5 = new Path();
 			List<Town> listAED = new ArrayList<Town>();
 			listAED.add(a);
 			listAED.add(e);
 			listAED.add(d);
-			System.out.printf("\nOutput #5: %s", p5.getDistance(listAED));
+
+			int q1 = p1.getDistance(listABC, 0);
+			int q2 = p2.getDistance(listAD, 0);
+			int q3 = p3.getDistance(listADC, 0);
+			int q4 = p4.getDistance(listAEBCD, 0);
+			int q5 = p5.getDistance(listAED, 0);
+			int[] questions1to5 = {q1, q2, q3, q4, q5};
+			int i = 0;
+			for (int q : questions1to5) {
+				if (q == 0) {
+					System.out.printf("\nOutput #%s: NO SUCH ROUTE", i);
+				}
+				System.out.printf("\nOutput #%s: %s", i, q);
+				i++;
+			}
 
 			Path p6 = new Path();
-			// System.out.printf("\nOutput #6: %s", p6.numberOfTrips(c, c, c.dests, 3, 0));
-			// System.out.printf("\nOutput #7: %s", p6.exactNumberOfTrips(a, c, a.dests, 4));
-			// System.out.printf("\nOutput #8: %s", p6.getShortestDistance(a, c));
+			System.out.printf("\nOutput #6: %s", p6.numberOfTrips(c, c, c.dests, 3, 0));
+			System.out.printf("\nOutput #7: %s", p6.exactNumberOfTrips(a, c, a.dests, 4));
+			System.out.printf("\nOutput #8: %s", p6.getShortestDistance(a, c));
 			// System.out.printf("\nOutput #9: %s", p6.getShortestDistance(b, b));
 
 		} catch (Exception e) {
