@@ -48,30 +48,47 @@ public class Main {
 			e.addOriginRoute(ae);
 
 			// questions 1-5
-			// addAll method?
 			Path p1 = new Path();
-			List<Town> abc = new ArrayList<Town>();
-			abc.add(a);
-			abc.add(b);
-			abc.add(c);
-			System.out.println(p1.getDistance(abc));
-
-			// List<Town> ad = new ArrayList<Town>();
-			// ad.add(a);
-			// 2. The distance of the route A-D.
-			// 3. The distance of the route A-D-C.
-			// 4. The distance of the route A-E-B-C-D.
-			// 5. The distance of the route A-E-D.
-
-			// The number of trips starting at C and ending at C with a maximum of 3 stops.  
-			// In the sample data below, there are two such trips: C-D-C (2 stops). and C-E-B-C (3 stops).
+			List<Town> listABC = new ArrayList<Town>();
+			listABC.add(a);
+			listABC.add(b);
+			listABC.add(c);
+			System.out.printf("\nOutput #1: %s", p1.getDistance(listABC));
 
 			Path p2 = new Path();
-			// System.out.printf("\nNumber of trips: %s", p2.numberOfTrips(c, c, c.dests, 3, 0));
-			// System.out.printf("\nNumber of trips: %s", p2.exactNumberOfTrips(a, c, a.dests, 4));
+			List<Town> listAD = new ArrayList<Town>();
+			listAD.add(a);
+			listAD.add(d);
+			System.out.printf("\nOutput #2: %s", p2.getDistance(listAD));
 
-			// System.out.printf("\n%s", p2.getShortestDistance(a, c));
+			Path p3 = new Path();
+			List<Town> listADC = new ArrayList<Town>();
+			listADC.add(a);
+			listADC.add(d);
+			listADC.add(c);
+			System.out.printf("\nOutput #3: %s", p3.getDistance(listADC));
 
+			Path p4 = new Path();
+			List<Town> listAEBCD = new ArrayList<Town>();
+			listAEBCD.add(a);
+			listAEBCD.add(e);
+			listAEBCD.add(b);
+			listAEBCD.add(e);
+			listAEBCD.add(d);
+			System.out.printf("\nOutput #4: %s", p4.getDistance(listAEBCD));
+
+			Path p5 = new Path();
+			List<Town> listAED = new ArrayList<Town>();
+			listAED.add(a);
+			listAED.add(e);
+			listAED.add(d);
+			// System.out.printf("\nOutput #5: %s", p5.getDistance(listAED));
+
+			Path p6 = new Path();
+			// System.out.printf("\nOutput #6: %s", p6.numberOfTrips(c, c, c.dests, 3, 0));
+			// System.out.printf("\nOutput #7: %s", p6.exactNumberOfTrips(a, c, a.dests, 4));
+			// System.out.printf("\nOutput #8: %s", p6.getShortestDistance(a, c));
+			// System.out.printf("\nOutput #9: %s", p6.getShortestDistance(b, b));
 
 		} catch (Exception e) {
 			System.out.println(e);

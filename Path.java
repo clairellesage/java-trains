@@ -1,42 +1,30 @@
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Collection;
-import java.util.*;
 import java.util.function.*;
 import java.util.stream.*;
+
 public class Path {
 	
 	private int stops;
 
-	// there is a problem with when towns is empty, getting index is out of bounds error!
 	public int getDistance(List<Town> towns) {
-    	List<Town> townsClone = new ArrayList<Town>(towns);
-    	towns.remove(towns.get(0));
-    	Town first = townsClone.get(0);
-    	Town second = townsClone.get(1);
-    	List<Route> filteredRoutes = filterDests(first, second);
-
-	    if (filteredRoutes.size() == 0) {
+	    if (towns.size() < 2) {
 	    	return 0;
 	    } else {
-	    	// System.out.println(filteredRoutes.size());
+	    	Town first = towns.get(0);
+	    	Town second = towns.get(1);
+	    	List<Route> filteredRoutes = filterDests(first, second);
 	    	Route filteredRoute = filteredRoutes.get(0);
-	    	System.out.println(filteredRoute.name);
-	    	System.out.println(filteredRoute.distance);
-	    	return 0;
-	    	// return filteredRoute.distance + getDistance(towns);
-	    }		// } else {
-		// 	return filteredRoutes.distance;
-		// }
-
+	    	towns.remove(first);
+	    	return filteredRoute.distance + getDistance(towns);
+	    }
 	}
 
 	private List<Route> filterDests(Town first, Town second) {
+		System.out()
 		return first.dests.stream().filter(outgoingRt -> outgoingRt.getDest().equals(second)).collect(Collectors.toList());
 	}
-
-	// The number of trips starting at C and ending at C with a maximum of 3 stops.  
-	// In the sample data below, there are two such trips: C-D-C (2 stops). and C-E-B-C (3 stops).
 
 	public int numberOfTrips(Town origin, Town destination, List<Route> outgoing, int remainingStops, int trips) {
 		if (remainingStops == 1){
@@ -45,9 +33,7 @@ public class Path {
 			List<Route> successors = new ArrayList<Route>();
 
 			for (Route rt : outgoing) {
-				System.out.printf("\noutgoing route: %s", rt.name);
 				for (Route dt : rt.dest.dests) {
-					System.out.printf("\nSuccessors: %s", dt.name);
 					successors.add(dt);
 				}
 			}
@@ -56,15 +42,7 @@ public class Path {
 				.filter(ogRoute -> ogRoute.dest.equals(destination))
 				.collect(Collectors.toList()).size() + trips;
 
-			System.out.printf("\ntrips : %s\n", trips);
-
-			// successors.stream()
-			// 	.filter(ogRoute -> ogRoute.dest.equals(destination))
-			// 	.collect(Collectors.toList())
-			// 	.forEach(t -> System.out.printf("trip %s\n", t.name));
-
 			return numberOfTrips(origin, destination, successors, remainingStops - 1, trips);
-			// return 0;
 		}
 	}
 
@@ -72,23 +50,18 @@ public class Path {
 			List<Route> successors = new ArrayList<Route>();
 
 			for (Route rt : outgoing) {
-				System.out.printf("\noutgoing route: %s", rt.name);
 				for (Route dt : rt.dest.dests) {
-					System.out.printf("\nSuccessors: %s", dt.name);
 					successors.add(dt);
 				}
 			}
-
 
 			if (remainingStops == 1){
 				int trips = successors.stream()
 					.filter(ogRoute -> ogRoute.dest.equals(destination))
 					.collect(Collectors.toList()).size();
-				System.out.printf("\ntrips : %s\n", trips);
 				successors.stream()
 					.filter(ogRoute -> ogRoute.dest.equals(destination))
-					.collect(Collectors.toList())
-					.forEach(t -> System.out.printf("trip %s\n", t.name));
+					.collect(Collectors.toList());
 				return trips;
 			} else {
 				return exactNumberOfTrips(origin, destination, successors, remainingStops - 1);
@@ -104,7 +77,7 @@ public class Path {
 
 		untravelledTowns.add(origin);
 		origin.setDistanceFromOrigin(0);
-
+		
 		while(untravelledTowns.size() > 0) {
 			Town evaluationTown = getNodeWithLowestDistance(untravelledTowns);
 			untravelledTowns.remove(evaluationTown);
@@ -126,18 +99,11 @@ public class Path {
 
 	private void evaluatedNeighbors(Town evaluationTown, List<Town> untravelledTowns, List<Town> travelledTowns){
 		for (Route rt : evaluationTown.dests) {
-			// System.out.printf("\nSuccessors: %s", rt.dest.name);
 			if (!travelledTowns.contains(rt.dest)) {
-				System.out.printf("\nrt dest name %s", rt.dest.name);
-				System.out.printf("\neval town %s", evaluationTown.name);
-				System.out.printf("\nrt distance %s", rt.distance);
 				int routeDistance = rt.distance;
 				int newDistance = evaluationTown.getDistanceFromOrigin() + routeDistance;
-				System.out.printf("\nnew distance %s", newDistance);
-				System.out.printf("\nrt dest name %s", routeDistance);
 				if (rt.dest.getDistanceFromOrigin() > newDistance){
 					rt.dest.setDistanceFromOrigin(newDistance);
-					System.out.printf("\nrt dest getDistanceFromOrigin %s", rt.dest.getDistanceFromOrigin());
 					untravelledTowns.add(rt.dest);
 				}
 			}	
