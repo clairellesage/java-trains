@@ -54,7 +54,7 @@ public class Main {
 			abc.add(a);
 			abc.add(b);
 			abc.add(c);
-			// System.out.println(p1.getDistance(abc));
+			System.out.println(p1.getDistance(abc));
 
 			// List<Town> ad = new ArrayList<Town>();
 			// ad.add(a);
@@ -68,9 +68,9 @@ public class Main {
 
 			Path p2 = new Path();
 			// System.out.printf("\nNumber of trips: %s", p2.numberOfTrips(c, c, c.dests, 3, 0));
-			Path p3 = new Path();
-			System.out.printf("\nNumber of trips: %s", p3.exactNumberOfTrips(a, c, a.dests, 4));
+			// System.out.printf("\nNumber of trips: %s", p2.exactNumberOfTrips(a, c, a.dests, 4));
 
+			// System.out.printf("\n%s", p2.getShortestDistance(a, c));
 
 
 		} catch (Exception e) {

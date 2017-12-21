@@ -4,7 +4,6 @@ import java.util.Collection;
 import java.util.*;
 import java.util.function.*;
 import java.util.stream.*;
-
 public class Path {
 	
 	private int stops;
@@ -38,10 +37,6 @@ public class Path {
 
 	// The number of trips starting at C and ending at C with a maximum of 3 stops.  
 	// In the sample data below, there are two such trips: C-D-C (2 stops). and C-E-B-C (3 stops).
-
-	// public int numberOfTrips(Town origin, int stops) {
-	// 	return routesToOrigin(origin, origin.dests, stops);	
-	// }
 
 	public int numberOfTrips(Town origin, Town destination, List<Route> outgoing, int remainingStops, int trips) {
 		if (remainingStops == 1){
@@ -84,6 +79,7 @@ public class Path {
 				}
 			}
 
+
 			if (remainingStops == 1){
 				int trips = successors.stream()
 					.filter(ogRoute -> ogRoute.dest.equals(destination))
@@ -95,10 +91,56 @@ public class Path {
 					.forEach(t -> System.out.printf("trip %s\n", t.name));
 				return trips;
 			} else {
-
-
 				return exactNumberOfTrips(origin, destination, successors, remainingStops - 1);
-			// return 0;
+			}
+	}
+
+	public int getShortestDistance(Town origin, Town destination) {
+
+		List<Route> outgoing = origin.dests;
+		Route shortestRoute = new Route("shortestRoute", origin, origin, 0);
+		List<Town> untravelledTowns = new ArrayList<Town>();
+		List<Town> travelledTowns = new ArrayList<Town>();
+
+		untravelledTowns.add(origin);
+		origin.setDistanceFromOrigin(0);
+
+		while(untravelledTowns.size() > 0) {
+			Town evaluationTown = getNodeWithLowestDistance(untravelledTowns);
+			untravelledTowns.remove(evaluationTown);
+			travelledTowns.add(evaluationTown);
+			evaluatedNeighbors(evaluationTown, untravelledTowns, travelledTowns);
+		}
+		return destination.getDistanceFromOrigin();
+	}
+
+	private Town getNodeWithLowestDistance(List<Town> untravelledTowns){
+		Town smallestDistanceFromOrigin = untravelledTowns.get(0);
+		for (Town ft : untravelledTowns){
+			if (ft.getDistanceFromOrigin() < smallestDistanceFromOrigin.getDistanceFromOrigin()){
+				smallestDistanceFromOrigin = ft;
+			}
+		}
+		return smallestDistanceFromOrigin;
+	}
+
+	private void evaluatedNeighbors(Town evaluationTown, List<Town> untravelledTowns, List<Town> travelledTowns){
+		for (Route rt : evaluationTown.dests) {
+			// System.out.printf("\nSuccessors: %s", rt.dest.name);
+			if (!travelledTowns.contains(rt.dest)) {
+				System.out.printf("\nrt dest name %s", rt.dest.name);
+				System.out.printf("\neval town %s", evaluationTown.name);
+				System.out.printf("\nrt distance %s", rt.distance);
+				int routeDistance = rt.distance;
+				int newDistance = evaluationTown.getDistanceFromOrigin() + routeDistance;
+				System.out.printf("\nnew distance %s", newDistance);
+				System.out.printf("\nrt dest name %s", routeDistance);
+				if (rt.dest.getDistanceFromOrigin() > newDistance){
+					rt.dest.setDistanceFromOrigin(newDistance);
+					System.out.printf("\nrt dest getDistanceFromOrigin %s", rt.dest.getDistanceFromOrigin());
+					untravelledTowns.add(rt.dest);
+				}
+			}	
 		}
 	}
 }
