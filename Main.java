@@ -53,7 +53,6 @@ public class Main {
 			listABC.add(a);
 			listABC.add(b);
 			listABC.add(c);
-			
 
 			Path p2 = new Path();
 			List<Town> listAD = new ArrayList<Town>();
@@ -86,20 +85,22 @@ public class Main {
 			int q4 = p4.getDistance(listAEBCD, 0);
 			int q5 = p5.getDistance(listAED, 0);
 			int[] questions1to5 = {q1, q2, q3, q4, q5};
+
 			int i = 0;
-			for (int q : questions1to5) {
-				if (q == 0) {
-					System.out.printf("\nOutput #%s: NO SUCH ROUTE", i);
-				}
-				System.out.printf("\nOutput #%s: %s", i, q);
-				i++;
-			}
+			// for (int q : questions1to5) {
+			// 	if (q == 0) {
+			// 		System.out.printf("\nOutput #%s: NO SUCH ROUTE", i);
+			// 	}
+			// 	System.out.printf("\nOutput #%s: %s", i, q);
+			// 	i++;
+			// }
 
 			Path p6 = new Path();
-			System.out.printf("\nOutput #6: %s", p6.numberOfTrips(c, c, c.dests, 3, 0));
-			System.out.printf("\nOutput #7: %s", p6.exactNumberOfTrips(a, c, a.dests, 4));
-			System.out.printf("\nOutput #8: %s", p6.getShortestDistance(a, c));
-			// System.out.printf("\nOutput #9: %s", p6.getShortestDistance(b, b));
+			// System.out.printf("\nOutput #6: %s", p6.numberOfTrips(c, c, 3, 0));
+			// System.out.printf("\nOutput #7: %s", p6.exactNumberOfTrips(a, c, a.dests, 4));
+			// System.out.printf("\nOutput #8: %s", p6.getShortestDistance(a, c));
+			System.out.printf("\nOutput #9: %s", p6.getShortestDistance(b, b));
+			// System.out.printf("\nOutput #10: %s", p6.numberOfTripsLessThanN(c, c, 30));
 
 		} catch (Exception e) {
 			System.out.println(e);

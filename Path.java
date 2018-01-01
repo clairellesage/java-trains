@@ -29,7 +29,8 @@ public class Path {
 		return first.dests.stream().filter(outgoingRt -> outgoingRt.getDest().equals(second)).collect(Collectors.toList());
 	}
 
-	public int numberOfTrips(Town origin, Town destination, List<Route> outgoing, int remainingStops, int trips) {
+	public int numberOfTrips(Town origin, Town destination, int remainingStops, int trips) {
+		List <Route> outgoing = origin.dests;
 		if (remainingStops == 1){
 			return trips;
 		} else {
@@ -45,7 +46,7 @@ public class Path {
 				.filter(ogRoute -> ogRoute.dest.equals(destination))
 				.collect(Collectors.toList()).size() + trips;
 
-			return numberOfTrips(origin, destination, successors, remainingStops - 1, trips);
+			return numberOfTrips(origin, destination, remainingStops - 1, trips);
 		}
 	}
 
@@ -73,20 +74,21 @@ public class Path {
 
 	public int getShortestDistance(Town origin, Town destination) {
 
-		List<Route> outgoing = origin.dests;
-		Route shortestRoute = new Route("shortestRoute", origin, origin, 0);
 		List<Town> untravelledTowns = new ArrayList<Town>();
 		List<Town> travelledTowns = new ArrayList<Town>();
 
+		// add first town to untravelled towns
 		untravelledTowns.add(origin);
 		origin.setDistanceFromOrigin(0);
 		
 		while(untravelledTowns.size() > 0) {
 			Town evaluationTown = getNodeWithLowestDistance(untravelledTowns);
+			System.out.printf("\nevaluationTown: %s", evaluationTown.name);
 			untravelledTowns.remove(evaluationTown);
 			travelledTowns.add(evaluationTown);
 			evaluatedNeighbors(evaluationTown, untravelledTowns, travelledTowns);
 		}
+		System.out.printf("\nreached end of loop");
 		return destination.getDistanceFromOrigin();
 	}
 
@@ -97,19 +99,47 @@ public class Path {
 				smallestDistanceFromOrigin = ft;
 			}
 		}
+		System.out.printf("\nsmallestDistanceFromOrigin: %s", smallestDistanceFromOrigin.name);
 		return smallestDistanceFromOrigin;
 	}
 
 	private void evaluatedNeighbors(Town evaluationTown, List<Town> untravelledTowns, List<Town> travelledTowns){
 		for (Route rt : evaluationTown.dests) {
-			if (!travelledTowns.contains(rt.dest)) {
+			System.out.printf("\nroute in evalTown dests: %s", rt.name);
+			// if (!travelledTowns.contains(rt.dest)) {
 				int routeDistance = rt.distance;
 				int newDistance = evaluationTown.getDistanceFromOrigin() + routeDistance;
-				if (rt.dest.getDistanceFromOrigin() > newDistance){
+				System.out.printf("\nrouteDistance: %s\nnewDistance: %s", routeDistance, newDistance);
+				if (newDistance < rt.dest.getDistanceFromOrigin()){
 					rt.dest.setDistanceFromOrigin(newDistance);
 					untravelledTowns.add(rt.dest);
+					System.out.printf("\nadded %s to untravelledTowns", rt.dest.name);
+				} else if (rt.dest.getDistanceFromOrigin() < 1) {
+					rt.dest.setDistanceFromOrigin(newDistance);
+					System.out.printf("\nrt.dest is < 1 : %s", rt.dest.getDistanceFromOrigin());
 				}
-			}	
+			// }	
 		}
 	}
+	// public int numberOfTripsLessThanN(Town origin, Town destination, int maxDistance){	
+	// 	int tripsTotalDistance = 0;
+	// 	// this needs to be an array of arrays
+	// 	List<Route> allRoutes = new ArrayList<Route>();
+	// 	// I want to be storing Routes + a running totalDistance for each path
+
+	// 	while (tripsTotalDistance < maxDistance){
+	// 		// loop through origin's routes
+	// 		for (Route rt : origin.dests){
+	// 			List<Route> routesList = new ArrayList<Route>();
+	// 			System.out.printf("\noutgoing route: %s", rt.name);
+	// 			tripsTotalDistance += rt.getDistance();
+	// 			System.out.printf("\n%s's distance: %s", rt.name, rt.getDistance());
+	// 			System.out.printf("\nnew total distance: %s", tripsTotalDistance);
+	// 			routesList.add(rt);
+	// 			allRoutes.add(routesList);
+	// 		}
+			
+	// 	}
+	// 	return tripsTotalDistance;
+	// }
 }
