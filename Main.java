@@ -99,8 +99,8 @@ public class Main {
 			// System.out.printf("\nOutput #6: %s", p6.numberOfTrips(c, c, 3, 0));
 			// System.out.printf("\nOutput #7: %s", p6.exactNumberOfTrips(a, c, a.dests, 4));
 			// System.out.printf("\nOutput #8: %s", p6.getShortestDistance(a, c));
-			System.out.printf("\nOutput #9: %s", p6.getShortestDistance(b, b));
-			// System.out.printf("\nOutput #10: %s", p6.numberOfTripsLessThanN(c, c, 30));
+			// System.out.printf("\nOutput #9: %s", p6.getShortestDistance(b, b));
+			System.out.printf("\nOutput #10: %s", p6.numberOfTripsLessThanN(c, c, 30));
 
 		} catch (Exception e) {
 			System.out.println(e);

@@ -3,10 +3,45 @@ import java.util.List;
 import java.util.Collection;
 import java.util.function.*;
 import java.util.stream.*;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
 
 public class Path {
-	
-	private int stops;
+
+	private List<Route> pathRoutes = new ArrayList<Route>();
+
+	public int length(){
+		int totalDistance = 0;
+		for (Route rt : pathRoutes){
+			totalDistance += rt.getDistance();
+		}
+		return totalDistance;
+	}
+
+	public String name(){
+		String pathName = "";
+		if (pathRoutes.size() > 0) {
+			pathName = pathRoutes.get(0).getOrigin().getName();
+			for (Route pth : pathRoutes) {
+				pathName += pth.getDest().getName();
+			}
+		}
+		return pathName;
+	}
+
+	public List<Route> getRoutes(){
+		return pathRoutes;
+	}
+
+	public Town getFinalDest(){
+		return pathRoutes.get(pathRoutes.size() - 1).dest;
+	}
+
+	public void addRoute(Route rt){
+		pathRoutes.add(rt);
+	}
+
 
 	public int getDistance(List<Town> towns, int pathDistance) {
 	    if (towns.size() < 2) {
@@ -121,25 +156,47 @@ public class Path {
 			// }	
 		}
 	}
-	// public int numberOfTripsLessThanN(Town origin, Town destination, int maxDistance){	
-	// 	int tripsTotalDistance = 0;
-	// 	// this needs to be an array of arrays
-	// 	List<Route> allRoutes = new ArrayList<Route>();
-	// 	// I want to be storing Routes + a running totalDistance for each path
 
-	// 	while (tripsTotalDistance < maxDistance){
-	// 		// loop through origin's routes
-	// 		for (Route rt : origin.dests){
-	// 			List<Route> routesList = new ArrayList<Route>();
-	// 			System.out.printf("\noutgoing route: %s", rt.name);
-	// 			tripsTotalDistance += rt.getDistance();
-	// 			System.out.printf("\n%s's distance: %s", rt.name, rt.getDistance());
-	// 			System.out.printf("\nnew total distance: %s", tripsTotalDistance);
-	// 			routesList.add(rt);
-	// 			allRoutes.add(routesList);
-	// 		}
-			
-	// 	}
-	// 	return tripsTotalDistance;
-	// }
+	private boolean originMatchesDest(Town origin){
+		System.out.printf("\n path: %s", this.name()); 
+		System.out.printf("\n origin and dest: %s, %s", origin.getName(), this.getFinalDest().getName()); 
+		System.out.printf("\n origin matches dest: %s", this.getFinalDest().equals(origin));
+		return this.getFinalDest().equals(origin);
+	}
+
+	// number of trips from C to C with a distance less than 30
+	public int numberOfTripsLessThanN(Town origin, Town destination, int maxDistance){	
+		final Set<Path> allPaths = new HashSet<Path>();
+
+		for (Route rt : origin.getDests()){
+			Path newPath = new Path();
+			newPath = this;
+			newPath.addRoute(rt);
+			System.out.printf("\n\nnewpath %s", newPath.name());
+			System.out.printf("\nroute from origin: %s", rt.name);
+			if (newPath.length() < maxDistance && newPath.originMatchesDest(newPath.getRoutes().get(0).origin)){
+				allPaths.add(newPath);
+				System.out.printf("\nnew path added to allPaths: %s", newPath.name());
+				System.out.printf("\nallPaths size (after adding): %s", allPaths.size());
+			}
+			if (rt.dest != destination){
+				System.out.printf("\nallPaths size (no change): %s", allPaths.size());
+				return numberOfTripsLessThanN(rt.dest, destination, maxDistance);
+			}
+		}
+
+		System.out.printf("\nallPaths size final: %s", allPaths.size());
+		return allPaths.size();
+	}
 }
+
+// it's not following each destination path
+// return statement is being run multiple times, not carrying over the Paths
+// Paths are being removed from allPaths
+
+		// get origins routes
+		// create a new path out of each of those
+		// add to allPaths if distance < 30
+		// for each path get routes of last route
+
+		// origin needs to match dest (can be method that looks at source of first route and dest of last route)

@@ -20,8 +20,30 @@ public class Town {
 		this.name = name;
 	}
 
+	// public boolean equals(Object obj) {
+	// 	if (obj instanceof Town){
+	// 	    return true;
+	// 	}
+	// 	return false;
+	// }
+
+	public boolean equals(Object object2) {
+	    if (name.equals(((Town)object2).name)){
+	    	return true;
+	    }
+	    return false;
+	}
+
+	public int hashcode(){
+		return this.name.hashCode();
+	}
+
 	public String getName() {
 	    return name;
+	}
+
+	public List<Route> getDests(){
+		return this.dests;
 	}
 
 	public void setDistanceFromOrigin(int distanceFromOrigin){
