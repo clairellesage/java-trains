@@ -7,9 +7,15 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
-public class Path {
+public class Path implements Cloneable {
 
 	private List<Route> pathRoutes = new ArrayList<Route>();
+	private HashSet<Path> allPaths = new HashSet<Path>();
+
+	@Override
+	protected Object clone() throws CloneNotSupportedException {
+	    return super.clone();
+	}
 
 	public int length(){
 		int totalDistance = 0;
@@ -30,8 +36,12 @@ public class Path {
 		return pathName;
 	}
 
+	public void setRoutes(List<Route> rts){
+		pathRoutes = rts;
+	}
+
 	public List<Route> getRoutes(){
-		return pathRoutes;
+		return this.pathRoutes;
 	}
 
 	public Town getFinalDest(){
@@ -164,25 +174,43 @@ public class Path {
 		return this.getFinalDest().equals(origin);
 	}
 
+	// public static List<Route> cloneList(List<Route> list) {
+	//     List<Route> clone = new ArrayList<Route>(list.size());
+	//     for (Route item : list) {
+	//     	clone.add(item.clone());
+	//     }
+	//     return clone;
+	// }
+
 	// number of trips from C to C with a distance less than 30
 	public int numberOfTripsLessThanN(Town origin, Town destination, int maxDistance){	
-		final Set<Path> allPaths = new HashSet<Path>();
+
+		int counter = 0;
 
 		for (Route rt : origin.getDests()){
 			Path newPath = new Path();
-			newPath = this;
+			// newPath = this;
+			List clonedRoutes = new ArrayList<Route>();
+			newPath.setRoutes(this.getRoutes());
+			System.out.printf("\nthis.getRoutes() %s", this.getRoutes().size());
+			System.out.printf("\n %s", counter);
 			newPath.addRoute(rt);
-			System.out.printf("\n\nnewpath %s", newPath.name());
-			System.out.printf("\nroute from origin: %s", rt.name);
 			if (newPath.length() < maxDistance && newPath.originMatchesDest(newPath.getRoutes().get(0).origin)){
+				System.out.printf("\n\nnewpath %s", newPath.name());
+				System.out.printf("\nroute from origin: %s", rt.name);
+				System.out.printf("\nweight: %s", newPath.length());
 				allPaths.add(newPath);
 				System.out.printf("\nnew path added to allPaths: %s", newPath.name());
 				System.out.printf("\nallPaths size (after adding): %s", allPaths.size());
+				// numberOfTripsLessThanN(rt.dest, destination, maxDistance);
 			}
-			if (rt.dest != destination){
+			else if (newPath.length() < maxDistance && rt.dest != destination){
 				System.out.printf("\nallPaths size (no change): %s", allPaths.size());
-				return numberOfTripsLessThanN(rt.dest, destination, maxDistance);
+				numberOfTripsLessThanN(rt.dest, destination, maxDistance);
+			} else {
+				break;
 			}
+			counter++;
 		}
 
 		System.out.printf("\nallPaths size final: %s", allPaths.size());
