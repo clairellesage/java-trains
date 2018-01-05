@@ -10,12 +10,7 @@ import java.util.Set;
 public class Path implements Cloneable {
 
 	private List<Route> pathRoutes = new ArrayList<Route>();
-	private HashSet<Path> allPaths = new HashSet<Path>();
-
-	@Override
-	protected Object clone() throws CloneNotSupportedException {
-	    return super.clone();
-	}
+	private static HashSet<Path> allPaths = new HashSet<Path>();
 
 	public int length(){
 		int totalDistance = 0;
@@ -36,6 +31,14 @@ public class Path implements Cloneable {
 		return pathName;
 	}
 
+	public void initializeRoutes(List<Route> rts){
+		List<Route> newList = new ArrayList<Route>();
+		for (Route rt : rts){
+			newList.add(rt);
+		}
+		this.setRoutes(newList);
+	}
+
 	public void setRoutes(List<Route> rts){
 		pathRoutes = rts;
 	}
@@ -54,20 +57,20 @@ public class Path implements Cloneable {
 
 
 	public int getDistance(List<Town> towns, int pathDistance) {
-	    if (towns.size() < 2) {
-	    	return pathDistance;
-	    } else {
-	    	Town first = towns.get(0);
-	    	towns.remove(first);
-	    	Town second = towns.get(0);
-	    	List<Route> filteredRoutes = filterDests(first, second);
-	    	if (filteredRoutes.size() > 0) {
-	    		Route filteredRoute = filteredRoutes.get(0);
-	    		return getDistance(towns, pathDistance + filteredRoute.distance);
-	    	} else {
-	    		return 0;
-	    	}
-	    }
+		if (towns.size() < 2) {
+			return pathDistance;
+		} else {
+			Town first = towns.get(0);
+			towns.remove(first);
+			Town second = towns.get(0);
+			List<Route> filteredRoutes = filterDests(first, second);
+			if (filteredRoutes.size() > 0) {
+				Route filteredRoute = filteredRoutes.get(0);
+				return getDistance(towns, pathDistance + filteredRoute.distance);
+			} else {
+				return 0;
+			}
+		}
 	}
 
 	private List<Route> filterDests(Town first, Town second) {
@@ -174,43 +177,34 @@ public class Path implements Cloneable {
 		return this.getFinalDest().equals(origin);
 	}
 
-	// public static List<Route> cloneList(List<Route> list) {
-	//     List<Route> clone = new ArrayList<Route>(list.size());
-	//     for (Route item : list) {
-	//     	clone.add(item.clone());
-	//     }
-	//     return clone;
-	// }
-
 	// number of trips from C to C with a distance less than 30
 	public int numberOfTripsLessThanN(Town origin, Town destination, int maxDistance){	
 
-		int counter = 0;
 
 		for (Route rt : origin.getDests()){
+			System.out.printf("\n\nroute from origin outer: %s", rt.name);
 			Path newPath = new Path();
-			// newPath = this;
-			List clonedRoutes = new ArrayList<Route>();
-			newPath.setRoutes(this.getRoutes());
-			System.out.printf("\nthis.getRoutes() %s", this.getRoutes().size());
-			System.out.printf("\n %s", counter);
+
+			newPath.initializeRoutes(this.getRoutes());
 			newPath.addRoute(rt);
+			for (Route rout : newPath.getRoutes()){
+				System.out.printf("\n\trt in newpath %s", rout.name);
+			}
+			
+			System.out.printf("\nnewpath length: %s", newPath.length());
 			if (newPath.length() < maxDistance && newPath.originMatchesDest(newPath.getRoutes().get(0).origin)){
-				System.out.printf("\n\nnewpath %s", newPath.name());
-				System.out.printf("\nroute from origin: %s", rt.name);
+				System.out.printf("\nnewpath %s", newPath.name());
+				System.out.printf("\nroute from origin inner: %s", rt.name);
 				System.out.printf("\nweight: %s", newPath.length());
 				allPaths.add(newPath);
 				System.out.printf("\nnew path added to allPaths: %s", newPath.name());
 				System.out.printf("\nallPaths size (after adding): %s", allPaths.size());
 				// numberOfTripsLessThanN(rt.dest, destination, maxDistance);
 			}
-			else if (newPath.length() < maxDistance && rt.dest != destination){
+			if (newPath.length() < maxDistance){
 				System.out.printf("\nallPaths size (no change): %s", allPaths.size());
-				numberOfTripsLessThanN(rt.dest, destination, maxDistance);
-			} else {
-				break;
-			}
-			counter++;
+				newPath.numberOfTripsLessThanN(rt.dest, destination, maxDistance);
+			} 
 		}
 
 		System.out.printf("\nallPaths size final: %s", allPaths.size());
