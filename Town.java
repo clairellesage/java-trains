@@ -3,9 +3,9 @@ import java.util.ArrayList;
 
 public class Town {
 	
-	public String name;
 	public List<Route> origins = new ArrayList<Route>();
 	public List<Route> dests = new ArrayList<Route>();
+	public String name;
 	public int distanceFromOrigin = 999999;
 
 	public void addOriginRoute(Route r) {
@@ -19,13 +19,6 @@ public class Town {
 	public Town(String name) {
 		this.name = name;
 	}
-
-	// public boolean equals(Object obj) {
-	// 	if (obj instanceof Town){
-	// 	    return true;
-	// 	}
-	// 	return false;
-	// }
 
 	public boolean equals(Object object2) {
 	    if (name.equals(((Town)object2).name)){
